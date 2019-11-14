@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <windows.h>
 #include "basedef.h"
 #include "FuncDeclare.h"
 
@@ -19,6 +20,7 @@ void printBoard(const int Board[][A_SIZE])
 {
 	char symbol[] = { 'O','X','-' };
 
+	system("cls");
 	printf_s("\n  BOARD\n\n");
 
 	for (int i = 0; i < A_SIZE; i++)
