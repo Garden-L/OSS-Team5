@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <windows.h>
-#define NOMINMAX
 #include "basedef.h"
 #include "FuncDeclare.h"
 
