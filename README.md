@@ -1,17 +1,18 @@
-TicTacToe using Artificial Intelligence
-=======================================
+### 오픈소스 개론 Team5 TicTacToe  
+=======================================  
+  
+틱택토 게임(오목의 한 종류)을 c언어를 이용해서 구현한 프로그램  
+  
+### 개발환경  
+```  
+OS : Windows10  
+개발도구 : Visual Studio 2015  
+언어 : C  
+  
+```  
 
-A game of TicTacToe implemented using Min-Max algorithm.
-
-### Compile
-```
-$ gcc tictactoe.c -o tictactoe
-```
-
-### Run
+### 실행과정 
 ```
 $ ./tictactoe
 ```
 
-### See in Action
-<a href="https://youtu.be/8gemtL9PZh8"><img src="https://github.com/hitanshu-dhawan/TicTacToeAI/blob/master/youtube_icon.png" alt="YouTube Video"  width="80px" /></a>
