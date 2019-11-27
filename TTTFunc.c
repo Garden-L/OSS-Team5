@@ -139,7 +139,7 @@ int insertRanking(float time, int status) {
 		for (int i = 0; i < 5; i++)
 		{
 			if (r[i].score == -1) { break; }
-			rankingFilerintf_s(rankingFile, "%.2f %d %d\n", r[i].score, r[i].status, r[i].id);
+			fprintf_s(rankingFile, "%.2f %d %d\n", r[i].score, r[i].status, r[i].id);
 		}
 
 		fclose(rankingFile);
@@ -192,7 +192,7 @@ void printBoard(int Board[][A_SIZE])
 	char X[6][6] = { {"X    X"},{" X  X "},{"  XX  "},{"  XX  "} ,{" X  X "} ,{"X    X"} };
 	char O[6][6] = { {" OOOO "},{"OO  OO"},{"O    O"} ,{"O    O"},{"OO  OO"} ,{" OOOO "} };
 	char nothing[6][6] = { {"      "},{"      "},{" ==== "},{" ==== "},{"      "},{"      "} };
-	
+
 	system("cls");
 
 
@@ -432,7 +432,7 @@ void HumanTurn(int Board[][A_SIZE], const int player)
 int computerLvlSelect(void)
 {
 
-	int level=0;
+	int level = 0;
 
 	while (level == 0)
 	{
@@ -444,7 +444,7 @@ int computerLvlSelect(void)
 		scanf_s("%d", &level);
 
 
-		if (level<1 || level>3)
+		if (level < 1 || level>3)
 
 
 		{
