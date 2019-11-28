@@ -1,18 +1,41 @@
-* Copyright (c) 2017 Hitanshu Dhawan
-* Released under the MIT license.
-
 TicTacToe using Artificial Intelligence
 =======================================
 A game of TicTacToe implemented using Min-Max algorithm.
 
-### Compile
+### Update (date. 2019-11-29)
+```
+1. HUMANvsHUMAN
+  - 2인용 플레이를 할 수 있는 기능
+
+2. Level System
+  - 컴퓨터의 플레이 난이도를 조절할 수 있는 기능
+
+3. Ranking System
+  - 컴퓨터와 대결에서 시간을 잰 후 시간 순으로 순위를 매기는 기능
+
+4. Console Clear
+  - 콘솔창을 초기화 시키는 기능
+
+5. Title
+  - 초기화면에서 Tic Tac Toe Game 타이틀 출력
+
+6. 파일 분할
+ 
+7. 코드 클린화 작업
+  - 일반적인 형태의 코드 수정
+  - 주석문 한글화 및 규칙하에 수정
+  - 파일 주석문 삽입
+  - 함수 주석문 삽입
+```
+
+### IDE
 ```
 - Visual Studio 2015
 ```
 
 ### Run
 ```
-- ./tictactoe
+- tictactoe.exe
 ```
 
 ### Usage

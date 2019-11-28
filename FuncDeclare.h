@@ -1,7 +1,7 @@
 /*
  * 파일명 : FuncDelcare
  * 기능 : 모든 함수 선언 파일
- * 수정 날짜 : 2019-11-25
+ * 수정 날짜 : 2019-11-29
  * 파일 제작자 : 세종대학교
  *				오픈소스개론[Pro.장문정] - Team5 (임정원, 강민성, 원성훈, 고선엽)
  */
@@ -32,9 +32,7 @@ int minMax_EASY(int[][A_SIZE]);
 int minMax_NORMAL(int[][A_SIZE], int, int*);
 int minMax_HARD(int[][A_SIZE], int, int*);
 int computerLvlSelect(void);
-int booleanEmptyBoard(int Board[][A_SIZE]);
-
-
+int isEmptyBoard(int Board[][A_SIZE]);
 
 /*Declare of function template in Ranking.c*/
 void printRanking(void);

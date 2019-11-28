@@ -1,7 +1,14 @@
+/*
+ * 파일명 : Ranking.c
+ * 기능 : 랭킹 시스템 관련 정의
+ * 수정 날짜 : 2019-11-29
+ * 파일 제작자 : 세종대학교
+ *				오픈소스개론[Pro.장문정] - Team5 (임정원, 강민성, 원성훈, 고선엽)
+ */
+
 #include <stdio.h>
 #include "basedef.h"
 #include "FuncDeclare.h"
-
 
 /*
 -기능: 게임 시작 전 이전에 저장된 랭킹을 보여줌
