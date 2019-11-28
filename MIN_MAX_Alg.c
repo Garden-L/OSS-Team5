@@ -110,7 +110,7 @@ int minMax_HARD(int Board[][A_SIZE], int Player, int* depth)
 		makeMove(Board, col, row, Player);
 
 		(*depth)++;
-		scoreList[i] = minMax_NORMAL(Board, !Player, depth);
+		scoreList[i] = minMax_HARD(Board, !Player, depth);
 		(*depth)--;
 
 		makeMove(Board, col, row, EMPTY);
