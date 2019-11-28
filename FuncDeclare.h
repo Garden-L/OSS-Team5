@@ -11,8 +11,6 @@
 
 #include "basedef.h"
 /*Declare of function template in TTTFunc.c*/
-void printRanking(void);
-int insertRanking(float, int);
 void initBoard(int[][A_SIZE]);
 void printBoard(const int[][A_SIZE]);
 int isBoardFull(const int[][A_SIZE]);
@@ -37,4 +35,8 @@ int computerLvlSelect(void);
 int booleanEmptyBoard(int Board[][A_SIZE]);
 
 
+
+/*Declare of function template in Ranking.c*/
+void printRanking(void);
+int insertRanking(float, int);
 #endif
