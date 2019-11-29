@@ -37,156 +37,6 @@ int validPosition(const int Board[][A_SIZE], int inputCol, int inputRow)
 	return TRUE;
 }
 
-void printRanking(void)
-{
-	//랭킹 파일의 구성
-	/*시간 승/무승 이름\n*/
-	struct ranking r[5];
-
-	FILE* rankingFile = NULL;
-
-	fopen_s(&rankingFile, "rank.txt", "r");
-
-
-	//init
-	for (int i = 0; i < 5; i++)
-	{
-		r[i].id = -1;
-		r[i].score = -1;
-		r[i].status = -1;
-	}
-
-	if (rankingFile != NULL)
-	{
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (feof(rankingFile) == EOF) { break; }
-			fscanf_s(rankingFile, "%f %d %d\n", &r[i].score, &r[i].status, &r[i].id);
-		}
-
-		fclose(rankingFile);
-	}
-	else
-	{
-		fopen_s(&rankingFile, "rank.txt", "w");
-		fclose(rankingFile);
-	}
-
-	/*score status name*/
-	printf_s("\nNow Ranking\nScore(time)\tStatus\t\tStudent ID\n");
-	for (int i = 0; i < 5; i++)
-	{
-		char status = '\0';
-		if (r[i].score == -1)
-		{
-			break;
-		}
-
-		if (r[i].status == WIN)
-		{
-			status = 'W';
-		}
-		else
-		{
-			status = 'D';
-		}
-
-		printf_s("%.2f\t\t%c\t\t%d\n", r[i].score, status, r[i].id);
-	}
-
-	printf_s("\n\n");
-
-}
-
-int insertRanking(float time, int status)
-{
-
-	if (status == LOSE) { return 0; }
-
-	/*시간 승/무승 이름\n*/
-	struct ranking r[5];
-
-	//init
-	for (int i = 0; i < 5; i++)
-	{
-		r[i].score = -1;
-		r[i].status = -1;
-		r[i].id = -1;
-	}
-
-	int seat = -1;
-	int id = -1;
-	FILE* rankingFile = NULL;
-
-	fopen_s(&rankingFile, "rank.txt", "r");
-
-	if (rankingFile != NULL)
-	{
-		for (int i = 0; i < 5; i++)
-		{
-			if (feof(rankingFile) == EOF) { break; }
-			fscanf_s(rankingFile, "%f %d %d\n", &r[i].score, &r[i].status, &r[i].id);
-		}
-		fclose(rankingFile);
-	}
-
-
-	for (int i = 0; i < 5; i++)
-	{
-		if (r[i].score == -1)
-		{
-			seat = i;
-			break;
-		}
-
-		if (r[i].score > time)
-		{
-			seat = i;
-			break;
-		}
-	}
-
-	if (seat == -1)
-	{
-		printf_s("Your score is not good enough to rank. Play the game faster\n\n");
-	}
-	else
-	{
-
-		printf_s("Your score is %.2f\n\n", time);
-		printf_s("Scores can be ranked. Please enter your student ID\nID(To int) : ");
-		scanf_s("%d", &id);
-		printf_s("\n\n");
-
-		for (int i = 4; i > seat; i--)
-		{
-			r[i].id = r[i - 1].id;
-			r[i].score = r[i - 1].score;
-			r[i].status = r[i - 1].status;
-		}
-
-		r[seat].score = time;
-		r[seat].id = id;
-		r[seat].status = status;
-
-		fopen_s(&rankingFile, "rank.txt", "w");
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (r[i].score == -1) { break; }
-			//rankingFilerintf_s(rankingFile, "%.2f %d %d\n", r[i].score, r[i].status, r[i].id);
-		}
-
-		fclose(rankingFile);
-	}
-
-	printf_s("Well saved!\n\n");
-
-	return 0;
-}
-
-
 /*
 - 기능 : 콘솔창 글씨를 모두 삭제
 */
@@ -235,11 +85,13 @@ void printBoard(const int Board[][A_SIZE])
 {
 	int widthHeight = 6;
 
+
 	char X[6][7] = { {"X    X"},{" X  X "},{"  XX  "},{"  XX  "} ,{" X  X "} ,{"X    X"} };
 	char O[6][7] = { {" OOOO "},{"OO  OO"},{"O    O"} ,{"O    O"},{"OO  OO"} ,{" OOOO "} };
 	char nothing[6][7] = { {"      "},{"      "},{" ==== "},{" ==== "},{"      "},{"      "} };
 
 	consoleClear();
+
 
 
 	printf_s("\n               BOARD\n\n");
@@ -479,6 +331,7 @@ int computerLvlSelect(void)
 {
 	int level = 0;
 
+
 	printTitle();
 	printf_s("\n\t\t   *****난이도!!*****\n");
 	printf_s("\t\t   *     1. 초급    *\n");
@@ -487,11 +340,14 @@ int computerLvlSelect(void)
 	printf_s("\t\t   ******************\n\n");
 	printf_s("난이도를 입력해주세요 : ");
 
+
 	while (level == 0)
 	{
 		scanf_s("%d", &level);
 
+
 		if (level < 1 || level>3)
+
 		{
 			printf("난이도를 다시 입력해주세요 : ");
 			level = 0;
