@@ -1,7 +1,7 @@
 /*
  * 파일명 : TTTFunc.c
  * 기능 : 틱택토 기능 관련 함수 정의
- * 수정 날짜 : 2019-11-25
+ * 수정 날짜 : 2019-11-29
  * 파일 제작자 : 세종대학교
  *				오픈소스개론[Pro.장문정] - Team5 (임정원, 강민성, 원성훈, 고선엽)
  */
@@ -15,7 +15,7 @@
  /*
  -기능 : 입력 버퍼 초기화
  */
-void clear_stdin() {
+void clear_stdin(void) {
 	int ch;
 	while ((ch = getchar()) != EOF && ch != '\n') {};
 }
@@ -36,156 +36,6 @@ int validPosition(const int Board[][A_SIZE], int inputCol, int inputRow)
 
 	return TRUE;
 }
-
-void printRanking(void)
-{
-	//랭킹 파일의 구성
-	/*시간 승/무승 이름\n*/
-	struct ranking r[5];
-
-	FILE* rankingFile = NULL;
-
-	fopen_s(&rankingFile, "rank.txt", "r");
-
-
-	//init
-	for (int i = 0; i < 5; i++)
-	{
-		r[i].id = -1;
-		r[i].score = -1;
-		r[i].status = -1;
-	}
-
-	if (rankingFile != NULL)
-	{
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (feof(rankingFile) == EOF) { break; }
-			fscanf_s(rankingFile, "%f %d %d\n", &r[i].score, &r[i].status, &r[i].id);
-		}
-
-		fclose(rankingFile);
-	}
-	else
-	{
-		fopen_s(&rankingFile, "rank.txt", "w");
-		fclose(rankingFile);
-	}
-
-	/*score status name*/
-	printf_s("\nNow Ranking\nScore(time)\tStatus\t\tStudent ID\n");
-	for (int i = 0; i < 5; i++)
-	{
-		char status = '\0';
-		if (r[i].score == -1)
-		{
-			break;
-		}
-
-		if (r[i].status == WIN)
-		{
-			status = 'W';
-		}
-		else
-		{
-			status = 'D';
-		}
-
-		printf_s("%.2f\t\t%c\t\t%d\n", r[i].score, status, r[i].id);
-	}
-
-	printf_s("\n\n");
-
-}
-
-int insertRanking(float time, int status)
-{
-
-	if (status == LOSE) { return 0; }
-
-	/*시간 승/무승 이름\n*/
-	struct ranking r[5];
-
-	//init
-	for (int i = 0; i < 5; i++)
-	{
-		r[i].score = -1;
-		r[i].status = -1;
-		r[i].id = -1;
-	}
-
-	int seat = -1;
-	int id = -1;
-	FILE* rankingFile = NULL;
-
-	fopen_s(&rankingFile, "rank.txt", "r");
-
-	if (rankingFile != NULL)
-	{
-		for (int i = 0; i < 5; i++)
-		{
-			if (feof(rankingFile) == EOF) { break; }
-			fscanf_s(rankingFile, "%f %d %d\n", &r[i].score, &r[i].status, &r[i].id);
-		}
-		fclose(rankingFile);
-	}
-
-
-	for (int i = 0; i < 5; i++)
-	{
-		if (r[i].score == -1)
-		{
-			seat = i;
-			break;
-		}
-
-		if (r[i].score > time)
-		{
-			seat = i;
-			break;
-		}
-	}
-
-	if (seat == -1)
-	{
-		printf_s("Your score is not good enough to rank. Play the game faster\n\n");
-	}
-	else
-	{
-
-		printf_s("Your score is %.2f\n\n", time);
-		printf_s("Scores can be ranked. Please enter your student ID\nID(To int) : ");
-		scanf_s("%d", &id);
-		printf_s("\n\n");
-
-		for (int i = 4; i > seat; i--)
-		{
-			r[i].id = r[i - 1].id;
-			r[i].score = r[i - 1].score;
-			r[i].status = r[i - 1].status;
-		}
-
-		r[seat].score = time;
-		r[seat].id = id;
-		r[seat].status = status;
-
-		fopen_s(&rankingFile, "rank.txt", "w");
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (r[i].score == -1) { break; }
-			//rankingFilerintf_s(rankingFile, "%.2f %d %d\n", r[i].score, r[i].status, r[i].id);
-		}
-
-		fclose(rankingFile);
-	}
-
-	printf_s("Well saved!\n\n");
-
-	return 0;
-}
-
 
 /*
 - 기능 : 콘솔창 글씨를 모두 삭제
@@ -221,7 +71,7 @@ void initBoard(int Board[][A_SIZE])
 - 기능 : 전체 보드판 출력 (3x3)
 		 각 원소에 지정된 심볼 값으로 변화하여 출력한다.
 - 반환 : void
-- 출력예시:    빈 칸 출력		O입력 칸 출력			X입력 칸 출력
+- 출력예시:    빈 칸 출력		O입력 칸 출력		X입력 칸 출력
 			   --------		 ----------			 ----------
 			   |      |		 |  OOOO  |			 | X    X |
 			   |      |		 | OO  OO |			 |  X  X  |
@@ -240,7 +90,6 @@ void printBoard(const int Board[][A_SIZE])
 	char nothing[6][7] = { {"      "},{"      "},{" ==== "},{" ==== "},{"      "},{"      "} };
 
 	consoleClear();
-
 
 	printf_s("\n               BOARD\n\n");
 	printf_s("     0        1        2\n\n");
@@ -424,7 +273,7 @@ void ComputerTurn(int Board[][A_SIZE], int Player, int level)
 	switch (level)
 	{
 	case 1:
-		bestPos = minMax_EASY(Board, Player);				//초급모드 실행
+		bestPos = minMax_EASY(Board);				//초급모드 실행
 		break;
 
 	case 2:
@@ -436,7 +285,7 @@ void ComputerTurn(int Board[][A_SIZE], int Player, int level)
 		break;
 
 	default:
-		printf("System Error\n");
+		printf_s("System Error\n");
 		bestPos = ERROR;
 		break;
 	}
@@ -455,7 +304,7 @@ void HumanTurn(int Board[][A_SIZE], const int player)
 	int inputCol = -1, inputRow =-1;
 	while (1)
 	{
-		scanf_s("%d %d", &inputCol, &inputRow);
+		scanf_s("%d %d", &inputCol,&inputRow);
 
 		if (validPosition(Board, inputCol, inputRow))
 		{
@@ -479,6 +328,7 @@ int computerLvlSelect(void)
 {
 	int level = 0;
 
+
 	printTitle();
 	printf_s("\n\t\t   *****난이도!!*****\n");
 	printf_s("\t\t   *     1. 초급    *\n");
@@ -487,13 +337,15 @@ int computerLvlSelect(void)
 	printf_s("\t\t   ******************\n\n");
 	printf_s("난이도를 입력해주세요 : ");
 
+
 	while (level == 0)
 	{
 		scanf_s("%d", &level);
 
+
 		if (level < 1 || level>3)
 		{
-			printf("난이도를 다시 입력해주세요 : ");
+			printf_s("난이도를 다시 입력해주세요 : ");
 			level = 0;
 		}
 		clear_stdin();
@@ -515,7 +367,7 @@ void runGameVSCom(void)
 	//프린트 랭킹
 	printRanking();
 
-	printf_s("\nChoose X or O. O moves first !!\n\n");
+	printf_s("\n순서를 선택하세요. (선공 : O, 후공 : X)!!\n\n");
 	while (1)
 	{
 		char choice;
@@ -533,7 +385,7 @@ void runGameVSCom(void)
 		}
 		else
 		{
-			printf_s("Choose correct symbols\n");
+			printf_s("O와 X 둘 중 하나의 심볼을 결정하세요 : ");
 		}
 		clear_stdin();
 	}
@@ -672,7 +524,7 @@ void printTitle(void)
 /*
 -기능 : 초기 메뉴 화면을 출력
 */
-void showMenu()
+void showMenu(void)
 {
 	int choice = 0;
 	
