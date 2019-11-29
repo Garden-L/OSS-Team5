@@ -1,7 +1,7 @@
 /*
  * 파일명 : TTTFunc.c
  * 기능 : 틱택토 기능 관련 함수 정의
- * 수정 날짜 : 2019-11-25
+ * 수정 날짜 : 2019-11-29
  * 파일 제작자 : 세종대학교
  *				오픈소스개론[Pro.장문정] - Team5 (임정원, 강민성, 원성훈, 고선엽)
  */
@@ -15,7 +15,7 @@
  /*
  -기능 : 입력 버퍼 초기화
  */
-void clear_stdin() {
+void clear_stdin(void) {
 	int ch;
 	while ((ch = getchar()) != EOF && ch != '\n') {};
 }
@@ -71,7 +71,7 @@ void initBoard(int Board[][A_SIZE])
 - 기능 : 전체 보드판 출력 (3x3)
 		 각 원소에 지정된 심볼 값으로 변화하여 출력한다.
 - 반환 : void
-- 출력예시:    빈 칸 출력		O입력 칸 출력			X입력 칸 출력
+- 출력예시:    빈 칸 출력		O입력 칸 출력		X입력 칸 출력
 			   --------		 ----------			 ----------
 			   |      |		 |  OOOO  |			 | X    X |
 			   |      |		 | OO  OO |			 |  X  X  |
@@ -91,7 +91,6 @@ void printBoard(const int Board[][A_SIZE])
 	char nothing[6][7] = { {"      "},{"      "},{" ==== "},{" ==== "},{"      "},{"      "} };
 
 	consoleClear();
-
 
 
 	printf_s("\n               BOARD\n\n");
@@ -276,7 +275,7 @@ void ComputerTurn(int Board[][A_SIZE], int Player, int level)
 	switch (level)
 	{
 	case 1:
-		bestPos = minMax_EASY(Board, Player);				//초급모드 실행
+		bestPos = minMax_EASY(Board);				//초급모드 실행
 		break;
 
 	case 2:
@@ -288,7 +287,7 @@ void ComputerTurn(int Board[][A_SIZE], int Player, int level)
 		break;
 
 	default:
-		printf("System Error\n");
+		printf_s("System Error\n");
 		bestPos = ERROR;
 		break;
 	}
@@ -307,7 +306,7 @@ void HumanTurn(int Board[][A_SIZE], const int player)
 	int inputCol = -1, inputRow =-1;
 	while (1)
 	{
-		scanf_s("%d %d", &inputCol, &inputRow);
+		scanf_s("%d %d", &inputCol,&inputRow);
 
 		if (validPosition(Board, inputCol, inputRow))
 		{
@@ -349,7 +348,7 @@ int computerLvlSelect(void)
 		if (level < 1 || level>3)
 
 		{
-			printf("난이도를 다시 입력해주세요 : ");
+			printf_s("난이도를 다시 입력해주세요 : ");
 			level = 0;
 		}
 		clear_stdin();
@@ -371,7 +370,7 @@ void runGameVSCom(void)
 	//프린트 랭킹
 	printRanking();
 
-	printf_s("\nChoose X or O. O moves first !!\n\n");
+	printf_s("\n순서를 선택하세요. (선공 : O, 후공 : X)!!\n\n");
 	while (1)
 	{
 		char choice;
@@ -389,7 +388,7 @@ void runGameVSCom(void)
 		}
 		else
 		{
-			printf_s("Choose correct symbols\n");
+			printf_s("O와 X 둘 중 하나의 심볼을 결정하세요 : ");
 		}
 		clear_stdin();
 	}
@@ -528,7 +527,7 @@ void printTitle(void)
 /*
 -기능 : 초기 메뉴 화면을 출력
 */
-void showMenu()
+void showMenu(void)
 {
 	int choice = 0;
 	

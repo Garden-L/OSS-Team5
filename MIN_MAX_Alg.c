@@ -1,7 +1,7 @@
 /*
  * 파일명 : MIN_MAX_Alg.c
  * 기능 : 민맥스 알고리즘 관련 함수 정의
- * 수정 날짜 : 2019-11-25
+ * 수정 날짜 : 2019-11-29
  * 파일 제작자 : 세종대학교
  *				오픈소스개론[Pro.장문정] - Team5 (임정원, 강민성, 원성훈, 고선엽)
  */
@@ -9,6 +9,30 @@
 #include "FuncDeclare.h"
 #include <stdlib.h>
 #include <time.h>
+
+ /*
+ -기능 : 보드의 공백 여부를 반환한다.
+ -반환 : 공백이라면 TRUE , 공백이 아니라면 FALSE를 반환
+ */
+int isEmptyBoard(int Board[][A_SIZE])
+{
+	int emptyCheck = 0;
+
+	int i, j;
+
+	for (i = 0; (i < A_SIZE); i++)
+	{
+		for (j = 0; (j < A_SIZE); j++)
+		{
+			if (Board[i][j] != EMPTY)
+				return FALSE;
+		}
+	}
+	
+		return TRUE;
+
+}
+
 
 /*
 -반환 : 이길확률이 높은 최적의 좌표값을 반환한다.
@@ -76,11 +100,11 @@ int minMax_HARD(int Board[][A_SIZE], int Player, int* depth)
 	int bestScore;
 	int col, row;
 
-
-	if (booleanEmptyBoard(Board) && (Player == COMP))
+	//보드 원소가 모드 빈 상태이고, 플레이어가 컴퓨터라면 랜덤한 위치를 반환한다.
+	if (isEmptyBoard(Board) && (Player == COMP))
 	{
 		srand((int)time(NULL));
-		bestPosition = rand() % emptyCellCount;
+		bestPosition = rand() % (A_SIZE * A_SIZE - 1);
 		return bestPosition;
 	}
 
@@ -100,7 +124,6 @@ int minMax_HARD(int Board[][A_SIZE], int Player, int* depth)
 		}
 	}
 
-
 	int CurPosition;
 	for (int i = 0; i < emptyCellCount; i++)
 	{
@@ -116,10 +139,8 @@ int minMax_HARD(int Board[][A_SIZE], int Player, int* depth)
 		makeMove(Board, col, row, EMPTY);
 	}
 
-
 	if (Player == COMP)
 	{
-
 		bestScore = Max(scoreList, emptyCellCount, emptyCellList, &bestPosition);
 	}
 
@@ -156,10 +177,11 @@ int minMax_NORMAL(int Board[][A_SIZE], int Player, int* depth)
 	int bestScore;
 	int col , row;
 
-	if (booleanEmptyBoard(Board) && (Player==COMP))
+	//보드 원소가 모드 빈 상태이고, 플레이어가 컴퓨터라면 랜덤한 위치를 반환한다.
+	if (isEmptyBoard(Board) && (Player==COMP))
 	{
 		srand((int)time(NULL));
-		bestPosition = rand() % emptyCellCount;
+		bestPosition = rand() % (A_SIZE*A_SIZE - 1);
 		return bestPosition;
 	}
 
@@ -200,7 +222,6 @@ int minMax_NORMAL(int Board[][A_SIZE], int Player, int* depth)
 		{
 			bestScore = Max(scoreList, emptyCellCount, emptyCellList, &bestPosition);
 		}
-
 		if (Player == HUMAN)
 		{
 			bestScore = Min(scoreList, emptyCellCount, emptyCellList, &bestPosition);
@@ -208,7 +229,6 @@ int minMax_NORMAL(int Board[][A_SIZE], int Player, int* depth)
 	}
 
 	else
-
 	{
 		if (Player == COMP)
 		{
@@ -259,30 +279,4 @@ int minMax_EASY(int Board[][A_SIZE])
 	bestPosition = rand() % emptyCellCount;
 
 	return emptyCellList[bestPosition];
-}
-
-
-/*
--기능 : 보드의 공백 여부를 반환한다.
--반환 : 공백이라면 TRUE , 공백이 아니라면 FALSE를 반환
-*/
-int booleanEmptyBoard(int Board[][A_SIZE])
-{
-	int emptyCheck = 0;
-
-	int i,j;
-
-	for (i = 0; (i < A_SIZE) && (emptyCheck==0); i++)
-	{
-		for (j = 0; (j < A_SIZE) && (emptyCheck == 0) ; j++)
-		{
-			if (Board[i][j] != EMPTY)
-				emptyCheck++;
-		}
-	}
-	if (emptyCheck == 0)
-		return TRUE;
-	else
-		return FALSE;
-
 }
